@@ -1,0 +1,31 @@
+{
+  "song": "Run Boy Run",
+  "repeat": "reverse",
+  "sequence": [
+    {
+      "step": "stamp",
+      "count": "1",
+      "foot": "R"
+    },
+    {
+      "step": "flap",
+      "count": "a2",
+      "foot": "L"
+    },
+    {
+      "step": "stamp",
+      "count": "&",
+      "foot": "R"
+    },
+    {
+      "step": "shuffle",
+      "count": "3e",
+      "foot": "L"
+    },
+    {
+      "step": "ball_change",
+      "count": "&4",
+      "foot": "LR"
+    }
+  ]
+}
