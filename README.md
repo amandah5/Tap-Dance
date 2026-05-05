@@ -9,9 +9,9 @@ This pipeline processes raw tap dance sequence data, structures it into a tokeni
 
 ---
 
-## Pipeline Steps (Run Order)
+## Pipeline Steps
 
-### 1. Raw Data Processing
+### 1. Raw Data Processing (skip this step if reproducing; raw files are not included)
 Run:
 ```
 process_raw_data
@@ -22,7 +22,7 @@ process_raw_data
 
 ---
 
-### 2. Data Structuring
+### 2. Data Structuring (skip this step if reproducing; intermediate data files are not included)
 Run:
 ```
 structure_data
@@ -34,7 +34,7 @@ structure_data
 
 ---
 
-### 3. Data Augmentation
+### 3. Data Augmentation (skip this step if reproducing; augmented files have already been provided)
 Run:
 ```
 augment_data
@@ -55,16 +55,3 @@ unsloth
 - Input: both the training and validation JSONL files generated during augmentation
 - Note: this can be run on the original smaller datasets, or on the larger datasets (training_aug.jsonl and val_aug.jsonl)
 - Output: a trained model, loss plots, evaluation metrics, and an opportunity to experiment with unseen data
-
----
-
-## How to Run Full Pipeline
-
-Run in order:
-
-```
-process_raw_data
-structure_data
-augment_data
-unsloth
-```
