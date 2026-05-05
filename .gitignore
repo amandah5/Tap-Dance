@@ -1,0 +1,4 @@
+data/raw_data/
+data/intermediate_data/
+__pycache__/
+*.pyc
