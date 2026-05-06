@@ -11,30 +11,34 @@ This pipeline processes raw tap dance sequence data, structures it into a tokeni
 
 ## Pipeline Steps
 
-### 1. Raw Data Processing (skip this step if reproducing; raw files are not included)
+*If reproducing, skip steps 1-3. Full raw data files are not included; instead, use the provided JSONL files with the Unsloth notebook in step 4.*
+
+### 1. Raw Data Processing
 Run:
 ```
 process_raw_data
 ```
 
 - Input: a folder of text files, completely unprocessed
-- Output: a minimally-cleaned folder of text files, after expanding some abbreviations and reducing some unnecessary text
+- Output: a minimally-cleaned folder of text files after expanding abbreviations, standardizing file names, etc.
+
 
 ---
 
-### 2. Data Structuring (skip this step if reproducing; intermediate data files are not included)
+### 2. Data Structuring
 Run:
 ```
 structure_data
 ```
 
+- This is the script that handles user input to process the text files line by line.
 - Input: the output directory from `process_raw_data`
 - Output: a cleaned/filtered dataset of 106 valid examples
-    - Note: this script handles user input flow experimentation logic
+
 
 ---
 
-### 3. Data Augmentation (skip this step if reproducing; augmented files have already been provided)
+### 3. Data Augmentation
 Run:
 ```
 augment_data
@@ -43,6 +47,7 @@ augment_data
 - Input: the structured dataset
 - Output: an expanded dataset with augmented sequences
 - Note: this uses `step_replacements` internally (do not run this script separately)
+
 
 ---
 
@@ -53,5 +58,5 @@ unsloth
 ```
 
 - Input: both the training and validation JSONL files generated during augmentation
-- Note: this can be run on the original smaller datasets, or on the larger datasets (training_aug.jsonl and val_aug.jsonl)
 - Output: a trained model, loss plots, evaluation metrics, and an opportunity to experiment with unseen data
+- This can be run on the original smaller datasets, or on the larger datasets (`training_aug.jsonl` and `val_aug.jsonl`)
