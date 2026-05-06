@@ -16,7 +16,7 @@ This pipeline processes raw tap dance sequence data, structures it into a tokeni
 ### 1. Raw Data Processing
 Run:
 ```
-process_raw_data
+python src/process_raw_data.py
 ```
 
 - Input: a folder of text files, completely unprocessed
@@ -28,7 +28,7 @@ process_raw_data
 ### 2. Data Structuring
 Run:
 ```
-structure_data
+python src/structure_data.py
 ```
 
 - This is the script that handles user input to process the text files line by line.
@@ -41,7 +41,7 @@ structure_data
 ### 3. Data Augmentation
 Run:
 ```
-augment_data
+python src/augment_data.py
 ```
 
 - Input: the structured dataset
@@ -54,7 +54,7 @@ augment_data
 ### 4. SFT with LoRA 
 Run:
 ```
-unsloth
+unsloth.ipynb
 ```
 
 - Input: both the training and validation JSONL files generated during augmentation
