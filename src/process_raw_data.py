@@ -2,7 +2,9 @@ import os
 import re
 
 
+
 def process_class_plans(input_folder, output_folder, mappings):
+    """Perform minimal cleaning on raw documents to prepare for the user input annotation pipeline."""
 
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
@@ -37,6 +39,8 @@ def process_class_plans(input_folder, output_folder, mappings):
             output_path = os.path.join(output_folder, new_filename)
             with open(output_path, 'w', encoding='utf-8') as outfile:
                 outfile.write(expanded_text) # write to intermediate_data
+
+
 
 if __name__ == '__main__':
     # common abbreviations I use in plans:

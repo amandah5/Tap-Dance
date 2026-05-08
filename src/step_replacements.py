@@ -3,9 +3,7 @@ import random
 
 
 def compress_count(count):
-    """
-    Compress a 3-character count string into a 2-character one using tap-specific priority rules.
-    """
+    """Compress a 3-character count string into a 2-character one using tap-specific priority rules."""
 
     # 1 SOUND: keep the same
     if len(count) < 2:
@@ -34,9 +32,7 @@ def compress_count(count):
 
 
 def resolve_feet(parent_foot, rule, n): 
-    """
-    Return a list of the corresponding feet for each step in a composite step's expansion.
-    """
+    """Return a list of the corresponding feet for each step in a composite step's expansion."""
     flip = {"R": "L", "L": "R"} 
     if rule == "SAME": 
         return [parent_foot[0]] * n 

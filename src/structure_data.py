@@ -87,8 +87,10 @@ def save_exercise(exercise, file_name, counter):
 
 
 def process_file(file_path):
-    """Process one file at a time, which may contain more than one exercise. Each exercise becomes
-    its own training entry in the JSONL file."""
+    """
+    Process one file at a time, which may contain more than one exercise. Each exercise becomes
+    its own training entry in the JSONL file.
+    """
     with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
         lines = [l.strip() for l in f if l.strip()]
     file_name = os.path.basename(file_path).replace(".txt", "") # take the base name (no extension)

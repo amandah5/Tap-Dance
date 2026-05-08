@@ -1,7 +1,7 @@
 # Project Setup & Run Instructions
 
 ## Overview
-This project is intended to process tap dance class plans and standardize data structure. Then, I use a pretrained transformer model and Low-Rank Adaptation on this domain-specific language to teach it how to generate sequence completions.
+This project is intended to process tap dance class plans and standardize their structure. Then, this domain-specific data can be used to fine-tune a pretrained transformer model in order to teach the model how to generate sequence completions.
 
 This pipeline processes raw tap dance sequence data, structures it into a tokenized format, and performs data augmentation for training a sequence model. The included notebook was adapted from the Unsloth framework and performs training and evaluation on the curated data.
 

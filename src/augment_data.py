@@ -6,8 +6,8 @@ from step_replacements import compress_count, augment_step_sequence
 
 
 
-# right foot becomes left
 def mirror_sequence(sequence: str) -> str:
+    """Switch right and left feet in an exercise."""
     steps = sequence.split(' ')
     out = []
     for step in steps:
@@ -30,8 +30,8 @@ def mirror_sequence(sequence: str) -> str:
 
 
 
-# shift counts 4 counts ahead (helper to shift the entire sequence)
 def shift_count(count_str, shift=4):
+    """Shift counts by 4 within an 8-count phrase."""
     final = []
     for character in count_str:
         if character in  ["e", "&", "a"]:
@@ -45,6 +45,7 @@ def shift_count(count_str, shift=4):
 
 
 def shift_sequence(sequence: str) -> str:
+    """Apply 4-count shifts to every step in a sequence."""
     steps = sequence.split(' ')
     out = []
     for step in steps:
@@ -59,6 +60,7 @@ def shift_sequence(sequence: str) -> str:
 
 
 def load_jsonl(path):
+    """Generate a list of lines from a JSON file."""
     data = []
     with open(path, 'r', encoding='utf-8') as f:
         for line in f:
@@ -69,14 +71,15 @@ def load_jsonl(path):
 
 
 def write_jsonl(path, data):
+    """Write every element in data to a file."""
     with open(path, 'w', encoding='utf-8') as f:
         for obj in data:
             f.write(json.dumps(obj) + '\n')
 
 
 
-# apply mirrored, count-shifted, and expanded/swapped sequences
 def augment_dataset(raw_file):
+    """Apply mirrored, count-shifted, and expanded/swapped sequences for augmentation."""
     data = load_jsonl(raw_file)
     augmented = []
     seen = set()
@@ -102,8 +105,9 @@ def augment_dataset(raw_file):
             augmented.append(s) 
             seen.add(s['sequence'])
 
-        # for anywhere from 0 to 6 times, add an increasingly-mutated version of the original sequence with
-        # random (valid) steps swapped or expanded into multiple atomic steps
+        # for anywhere from 0 to 6 times, add a mutated version of the original sequence with
+        # random steps swapped or expanded into multiple atomic steps, based on a pre-determined
+        # dictionary of valid swaps
         k_expansions = random.randint(0, 6)
         for _ in range(k_expansions):
             current = augment_step_sequence(current, p_expand=0.3)
@@ -119,6 +123,7 @@ def augment_dataset(raw_file):
 
 
 def split_train_val(data, val_ratio=0.1, seed=42):
+    """Randomize the order of the datapoints and split between train and validation sets."""
     random.seed(seed)
     random.shuffle(data)
     val_size = int(len(data) * val_ratio)
