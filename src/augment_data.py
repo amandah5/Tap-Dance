@@ -1,40 +1,40 @@
 import json
 import random
-random.seed(42)
 
-from step_replacements import compress_count, augment_step_sequence
+from step_replacements import augment_step_sequence
+
+random.seed(42)
 
 
 
 def mirror_sequence(sequence: str) -> str:
     """Switch right and left feet in an exercise."""
-    steps = sequence.split(' ')
+    steps = sequence.split(" ")
     out = []
     for step in steps:
-        parts = step.split('|')
+        parts = step.split("|")
         if len(parts) != 3:
             out.append(step)
             continue
         foot = parts[1]
         flipped = []
         for c in foot:
-            if c == 'R':
-                flipped.append('L')
-            elif c == 'L':
-                flipped.append('R')
-            else: # N (none) or B (both)
+            if c == "R":
+                flipped.append("L")
+            elif c == "L":
+                flipped.append("R")
+            else:  # N (none) or B (both)
                 flipped.append(c)
-        parts[1] = ''.join(flipped)
-        out.append('|'.join(parts))
-    return ' '.join(out)
-
+        parts[1] = "".join(flipped)
+        out.append("|".join(parts))
+    return " ".join(out)
 
 
 def shift_count(count_str, shift=4):
     """Shift counts by 4 within an 8-count phrase."""
     final = []
     for character in count_str:
-        if character in  ["e", "&", "a"]:
+        if character in ["e", "&", "a"]:
             final.append(character)
         else:
             num = int(character)
@@ -43,39 +43,35 @@ def shift_count(count_str, shift=4):
     return "".join(final)
 
 
-
 def shift_sequence(sequence: str) -> str:
     """Apply 4-count shifts to every step in a sequence."""
-    steps = sequence.split(' ')
+    steps = sequence.split(" ")
     out = []
     for step in steps:
-        parts = step.split('|')
+        parts = step.split("|")
         if len(parts) != 3:
             out.append(step)
             continue
         parts[2] = shift_count(parts[2], shift=4)
-        out.append('|'.join(parts))
-    return ' '.join(out)
-
+        out.append("|".join(parts))
+    return " ".join(out)
 
 
 def load_jsonl(path):
     """Generate a list of lines from a JSON file."""
     data = []
-    with open(path, 'r', encoding='utf-8') as f:
+    with open(path, "r", encoding="utf-8") as f:
         for line in f:
             if line.strip():
                 data.append(json.loads(line))
     return data
 
 
-
 def write_jsonl(path, data):
     """Write every element in data to a file."""
-    with open(path, 'w', encoding='utf-8') as f:
+    with open(path, "w", encoding="utf-8") as f:
         for obj in data:
-            f.write(json.dumps(obj) + '\n')
-
+            f.write(json.dumps(obj) + "\n")
 
 
 def augment_dataset(raw_file):
@@ -84,26 +80,25 @@ def augment_dataset(raw_file):
     augmented = []
     seen = set()
     for item in data:
-        
-        seq = item['sequence'] # string
-        current = seq.split(' ') # list of tokens
+        seq = item["sequence"]  # string
+        current = seq.split(" ")  # list of tokens
 
         # keep the original sequence
         augmented.append(item)
 
         # add the original sequence, but mirrored (other fields like song stay the same)
-        m = item.copy() 
-        m['sequence'] = mirror_sequence(seq)
-        if m['sequence'] not in seen:
+        m = item.copy()
+        m["sequence"] = mirror_sequence(seq)
+        if m["sequence"] not in seen:
             augmented.append(m)
-            seen.add(m['sequence'])
+            seen.add(m["sequence"])
 
         # add the original sequence, but shift counts ahead by 4
         s = item.copy()
-        s['sequence'] = shift_sequence(seq)
-        if s['sequence'] not in seen:
-            augmented.append(s) 
-            seen.add(s['sequence'])
+        s["sequence"] = shift_sequence(seq)
+        if s["sequence"] not in seen:
+            augmented.append(s)
+            seen.add(s["sequence"])
 
         # for anywhere from 0 to 6 times, add a mutated version of the original sequence with
         # random steps swapped or expanded into multiple atomic steps, based on a pre-determined
@@ -111,15 +106,14 @@ def augment_dataset(raw_file):
         k_expansions = random.randint(0, 6)
         for _ in range(k_expansions):
             current = augment_step_sequence(current, p_expand=0.3)
-            candidate = ' '.join(current)
+            candidate = " ".join(current)
             if candidate not in seen:
                 seen.add(candidate)
                 e = item.copy()
-                e['sequence'] = candidate
+                e["sequence"] = candidate
                 augmented.append(e)
 
     return augmented
-
 
 
 def split_train_val(data, val_ratio=0.1, seed=42):
@@ -130,7 +124,6 @@ def split_train_val(data, val_ratio=0.1, seed=42):
     val_data = data[:val_size]
     train_data = data[val_size:]
     return train_data, val_data
-
 
 
 def main():
@@ -152,7 +145,6 @@ def main():
     print(f"Total augmented: {len(augmented)}")
     print(f"Train: {len(train)}")
     print(f"Val: {len(val)}")
-
 
 
 if __name__ == "__main__":
