@@ -5,6 +5,8 @@ This project is intended to process tap dance class plans and standardize their 
 
 This pipeline processes raw tap dance sequence data, structures it into a tokenized format, and performs data augmentation for training a sequence model. The included notebook was adapted from the Unsloth framework and performs training and evaluation on the curated data.
 
+*For a detailed discussion of the project's methodology, evaluation, and results, see the [full project report](tap_report.pdf).*
+
 *Raw and intermediate data folders are excluded from the repository to avoid clutter and maintain a clean, reproducible dataset pipeline. Only processed, analysis-ready data are included. See raw_data_sample.txt for a sense of the quality of this data.*
 
 ---
